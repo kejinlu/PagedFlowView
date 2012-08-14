@@ -180,6 +180,10 @@
 
 
 - (void)setPagesAtContentOffset:(CGPoint)offset{
+    //do nothing if datasource is empty
+    if ([_dataSource numberOfPagesInFlowView:self] == 0) {
+        return;
+    }
     //计算_visibleRange
     CGPoint startPoint = CGPointMake(offset.x - _scrollView.frame.origin.x, offset.y - _scrollView.frame.origin.y);
     CGPoint endPoint = CGPointMake(startPoint.x + self.bounds.size.width, startPoint.y + self.bounds.size.height);

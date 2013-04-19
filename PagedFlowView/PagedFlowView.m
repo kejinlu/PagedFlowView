@@ -133,7 +133,12 @@
                 UIView *cell = [_cells objectAtIndex:i];
                 CGFloat origin = cell.frame.origin.y;
                 CGFloat delta = fabs(origin - offset);
-                
+              
+                [cell setUserInteractionEnabled:YES];
+                UITapGestureRecognizer * tapper = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                        action:@selector(onCellDidClick:)];
+                [cell addGestureRecognizer:tapper];
+
                 CGRect originCellFrame = CGRectMake(0, _pageSize.height * i, _pageSize.width, _pageSize.height);//如果没有缩小效果的情况下的本该的Frame
                 
                 [UIView beginAnimations:@"CellAnimation" context:nil];

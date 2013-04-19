@@ -82,7 +82,7 @@ typedef enum{
 
 @optional
 - (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(PagedFlowView *)flowView;
-
+- (void)flowView:(PagedFlowView*)flowview didSelectPageAtIndex:(NSInteger)index;
 @end
 
 

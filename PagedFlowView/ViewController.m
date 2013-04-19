@@ -70,6 +70,12 @@
     NSLog(@"Scrolled to page # %d", pageNumber);
 }
 
+- (void)flowView:(PagedFlowView*)flowview didSelectPageAtIndex:(NSInteger)index {
+    NSLog(@"the image index: %d did select", index);
+    //do someting here when image did tap
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 #pragma mark PagedFlowView Datasource

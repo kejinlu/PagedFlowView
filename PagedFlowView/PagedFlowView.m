@@ -102,7 +102,13 @@
                 UIView *cell = [_cells objectAtIndex:i];
                 CGFloat origin = cell.frame.origin.x;
                 CGFloat delta = fabs(origin - offset);
-                
+              
+                // Add Pan Gesture for each cell
+                [cell setUserInteractionEnabled:YES];
+                UITapGestureRecognizer * tapper = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                          action:@selector(onCellDidClick:)];
+                [cell addGestureRecognizer:tapper];
+                                                   
                 CGRect originCellFrame = CGRectMake(_pageSize.width * i, 0, _pageSize.width, _pageSize.height);//如果没有缩小效果的情况下的本该的Frame
                 
                 [UIView beginAnimations:@"CellAnimation" context:nil];
@@ -269,9 +275,6 @@
     
     
 }
-
-
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
@@ -447,6 +450,13 @@
     }
     
     _currentPageIndex = pageIndex;
+}
+
+- (void)onCellDidClick:(UIPanGestureRecognizer*)recognzier
+{
+  if ([_delegate respondsToSelector:@selector(flowView:didSelectPageAtIndex:)]) {
+    [_delegate flowView:self didSelectPageAtIndex:_currentPageIndex];
+  }
 }
 
 @end

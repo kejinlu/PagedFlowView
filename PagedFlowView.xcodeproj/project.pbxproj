@@ -285,6 +285,7 @@
 		A3FB09281504D92600EE9194 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PagedFlowView/PagedFlowView-Prefix.pch";
 				INFOPLIST_FILE = "PagedFlowView/PagedFlowView-Info.plist";
@@ -296,6 +297,7 @@
 		A3FB09291504D92600EE9194 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PagedFlowView/PagedFlowView-Prefix.pch";
 				INFOPLIST_FILE = "PagedFlowView/PagedFlowView-Info.plist";

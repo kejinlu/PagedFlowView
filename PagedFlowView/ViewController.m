@@ -14,11 +14,6 @@
 @synthesize vFlowView;
 @synthesize hPageControl;
 
-- (void)dealloc {
-    [imageArray release];
-    
-    [super dealloc];
-}
 
 
 #pragma mark - View lifecycle
@@ -44,7 +39,6 @@
 
 - (void)viewDidUnload
 {
-    [imageArray release];
     
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -70,6 +64,12 @@
     NSLog(@"Scrolled to page # %d", pageNumber);
 }
 
+- (void)flowView:(PagedFlowView*)flowview didSelectPageAtIndex:(NSInteger)index {
+    NSLog(@"the image index: %d did select", index);
+    //do someting here when image did tap
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 #pragma mark PagedFlowView Datasource
@@ -82,7 +82,7 @@
 - (UIView *)flowView:(PagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
     UIImageView *imageView = (UIImageView *)[flowView dequeueReusableCell];
     if (!imageView) {
-        imageView = [[[UIImageView alloc] init] autorelease];
+        imageView = [[UIImageView alloc] init];
         imageView.layer.cornerRadius = 6;
         imageView.layer.masksToBounds = YES;
     }

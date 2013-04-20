@@ -56,18 +56,12 @@
     [superViewOfScrollView setBackgroundColor:[UIColor clearColor]];
     [superViewOfScrollView addSubview:_scrollView];
     [self addSubview:superViewOfScrollView];
-    [superViewOfScrollView release];
     
 }
 
 
 - (void)dealloc{
-    [_reusableCells release];
-    [_cells release];
     _scrollView.delegate = nil;
-    [_scrollView release];
-    [pageControl release];
-    [super dealloc];
 }
 
 - (void)queueReusableCell:(UIView *)cell{
@@ -102,7 +96,13 @@
                 UIView *cell = [_cells objectAtIndex:i];
                 CGFloat origin = cell.frame.origin.x;
                 CGFloat delta = fabs(origin - offset);
-                
+              
+                // Add Pan Gesture for each cell
+                [cell setUserInteractionEnabled:YES];
+                UITapGestureRecognizer * tapper = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                          action:@selector(onCellDidClick:)];
+                [cell addGestureRecognizer:tapper];
+                                                   
                 CGRect originCellFrame = CGRectMake(_pageSize.width * i, 0, _pageSize.width, _pageSize.height);//如果没有缩小效果的情况下的本该的Frame
                 
                 [UIView beginAnimations:@"CellAnimation" context:nil];
@@ -127,7 +127,12 @@
                 UIView *cell = [_cells objectAtIndex:i];
                 CGFloat origin = cell.frame.origin.y;
                 CGFloat delta = fabs(origin - offset);
-                
+              
+                [cell setUserInteractionEnabled:YES];
+                UITapGestureRecognizer * tapper = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                        action:@selector(onCellDidClick:)];
+                [cell addGestureRecognizer:tapper];
+
                 CGRect originCellFrame = CGRectMake(0, _pageSize.height * i, _pageSize.width, _pageSize.height);//如果没有缩小效果的情况下的本该的Frame
                 
                 [UIView beginAnimations:@"CellAnimation" context:nil];
@@ -270,9 +275,6 @@
     
 }
 
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 #pragma mark Override Methods
@@ -368,13 +370,13 @@
 
 
 - (UIView *)dequeueReusableCell{
-    UIView *cell = [[_reusableCells lastObject] retain];
+    UIView *cell = [_reusableCells lastObject];
     if (cell)
     {
         [_reusableCells removeLastObject];
     }
     
-    return [cell autorelease];
+    return cell;
 }
 
 - (void)scrollToPage:(NSUInteger)pageNumber {
@@ -447,6 +449,13 @@
     }
     
     _currentPageIndex = pageIndex;
+}
+
+- (void)onCellDidClick:(UIPanGestureRecognizer*)recognzier
+{
+  if ([_delegate respondsToSelector:@selector(flowView:didSelectPageAtIndex:)]) {
+    [_delegate flowView:self didSelectPageAtIndex:_currentPageIndex];
+  }
 }
 
 @end
